@@ -1,0 +1,52 @@
+{
+  "refinery": {
+    "id": "refinery",
+    "name": "정련로",
+    "category": "기초 생산"
+  },
+  "grinder": {
+    "id": "grinder",
+    "name": "분쇄기",
+    "category": "기초 생산"
+  },
+  "parts_processor": {
+    "id": "parts_processor",
+    "name": "부품가공기",
+    "category": "기초 생산"
+  },
+  "molder": {
+    "id": "molder",
+    "name": "성형기",
+    "category": "기초 생산"
+  },
+  "cultivator": {
+    "id": "cultivator",
+    "name": "재배기",
+    "category": "기초 생산"
+  },
+  "seed_extractor": {
+    "id": "seed_extractor",
+    "name": "씨앗 추출기",
+    "category": "기초 생산"
+  },
+  "equipment_parts_synthesizer": {
+    "id": "equipment_parts_synthesizer",
+    "name": "장비 부품 합성기",
+    "category": "합성과 제작"
+  },
+  "filler": {
+    "id": "filler",
+    "name": "충진기",
+    "category": "합성과 제작"
+  },
+  "packager": {
+    "id": "packager",
+    "name": "포장기",
+    "category": "합성과 제작"
+  },
+  "polisher": {
+    "id": "polisher",
+    "name": "연마기",
+    "category": "합성과 제작"
+  }
+}

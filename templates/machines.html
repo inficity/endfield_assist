@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}설비 목록 - Endfield Recipe Tree{% endblock %}
+
+{% block content %}
+<div class="management-page">
+    <h2>설비 목록</h2>
+
+    {% for category in categories %}
+    <div class="list-section">
+        <h3>{{ category }}</h3>
+        <div class="machine-grid">
+            {% for machine in machines %}
+            {% if machine.category == category %}
+            <div class="machine-card">
+                <img src="/static/icons/{{ machine.id }}.png" class="machine-card-icon" onerror="this.style.display='none'">
+                <div class="machine-card-name">{{ machine.name }}</div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

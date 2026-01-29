@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}트리 시각화 - Endfield Recipe Tree{% endblock %}
+
+{% block content %}
+<div class="tree-page">
+    <div class="search-section">
+        <h2>제작 트리 시각화</h2>
+        <div class="quick-buttons">
+            <button class="quick-btn" data-item="large_canyon_battery">
+                <img src="/static/icons/large_canyon_battery.png" onerror="this.style.display='none'">
+                <span>대용량 협곡 배터리</span>
+            </button>
+            <button class="quick-btn" data-item="buckwheat_healing_capsule_l">
+                <img src="/static/icons/buckwheat_healing_capsule_l.png" onerror="this.style.display='none'">
+                <span>메밀꽃 치유 캡슐(대)</span>
+            </button>
+            <button class="quick-btn" data-item="citron_canned_l">
+                <img src="/static/icons/citron_canned_l.png" onerror="this.style.display='none'">
+                <span>시트론 통조림(대)</span>
+            </button>
+        </div>
+        <div class="search-form">
+            <div class="form-group">
+                <label for="item-search">아이템 검색</label>
+                <input type="text" id="item-search" placeholder="아이템 이름 검색..." autocomplete="off">
+                <div id="autocomplete-list" class="autocomplete-items"></div>
+            </div>
+            <div class="form-group">
+                <label for="target-lines">최종 설비 라인 수</label>
+                <input type="number" id="target-lines" value="1" min="1" step="1">
+            </div>
+            <div class="form-group rate-display" id="rate-display" style="display: none;">
+                <label>목표 생산률</label>
+                <span id="calculated-rate">-</span>
+            </div>
+            <button id="show-tree-btn" class="btn btn-primary">트리 표시</button>
+        </div>
+    </div>
+
+    <div class="tree-container">
+        <div id="tree-network"></div>
+    </div>
+
+    <div class="production-summary-section" id="production-summary-section" style="display: none;">
+        <h3>생산 라인 요약</h3>
+        <div class="summary-tables">
+            <div class="summary-table-container">
+                <h4>생산 아이템</h4>
+                <table class="data-table" id="production-items-table">
+                    <thead>
+                        <tr>
+                            <th>아이템</th>
+                            <th>설비</th>
+                            <th>라인</th>
+                            <th>필요량</th>
+                            <th>실생산</th>
+                            <th>잉여</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="summary-table-container">
+                <h4>필요 원재료</h4>
+                <table class="data-table" id="raw-materials-table">
+                    <thead>
+                        <tr>
+                            <th>원재료</th>
+                            <th>필요량</th>
+                            <th>공급</th>
+                            <th>실공급</th>
+                            <th>잉여</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const items = {{ items | tojson | safe }};
+    const recipes = {{ recipes | tojson | safe }};
+</script>
+<script src="/static/js/tree.js"></script>
+{% endblock %}

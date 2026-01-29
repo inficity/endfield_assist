@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}아이템 목록 - Endfield Recipe Tree{% endblock %}
+
+{% block content %}
+<div class="management-page">
+    <h2>아이템 목록</h2>
+
+    <div class="filter-section">
+        <button class="btn filter-btn active" data-filter="all">전체 ({{ items | length }})</button>
+        <button class="btn filter-btn" data-filter="raw">천연자원</button>
+        <button class="btn filter-btn" data-filter="craft">제작품</button>
+    </div>
+
+    <div class="item-grid" id="item-grid">
+        {% for item in items %}
+        <div class="item-card {% if not item.is_raw %}clickable{% endif %}"
+             data-raw="{{ item.is_raw | lower }}"
+             data-item-id="{{ item.id }}">
+            <img src="/static/icons/{{ item.id }}.png" class="item-card-icon" onerror="this.style.display='none'">
+            <div class="item-card-name">{{ item.name }}</div>
+            <div class="item-card-type {% if item.is_raw %}raw{% else %}craft{% endif %}">
+                {{ "천연자원" if item.is_raw else "제작품" }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+const filterBtns = document.querySelectorAll('.filter-btn');
+const itemCards = document.querySelectorAll('.item-card');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        itemCards.forEach(card => {
+            if (filter === 'all') {
+                card.style.display = 'flex';
+            } else if (filter === 'raw') {
+                card.style.display = card.dataset.raw === 'true' ? 'flex' : 'none';
+            } else {
+                card.style.display = card.dataset.raw === 'false' ? 'flex' : 'none';
+            }
+        });
+    });
+});
+
+// Click to navigate to tree page for craftable items
+itemCards.forEach(card => {
+    if (card.classList.contains('clickable')) {
+        card.addEventListener('click', () => {
+            const itemId = card.dataset.itemId;
+            window.location.href = `/?item=${itemId}&lines=1`;
+        });
+    }
+});
+</script>
+{% endblock %}

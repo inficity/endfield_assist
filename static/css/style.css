@@ -1,0 +1,649 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background-color: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: #16213e;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4fc3f7;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #aaa;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #fff;
+    background-color: #0f3460;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: #4fc3f7;
+    color: #1a1a2e;
+}
+
+.btn-primary:hover {
+    background-color: #29b6f6;
+}
+
+.btn-secondary {
+    background-color: #555;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #666;
+}
+
+.btn-small {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.btn-edit {
+    background-color: #ffc107;
+    color: #1a1a2e;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: #fff;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #aaa;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #2a2a4a;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4fc3f7;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Tree Page */
+.tree-page {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.search-section {
+    background-color: #16213e;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+}
+
+.search-section h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #4fc3f7;
+}
+
+.quick-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.quick-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background-color: #2a2a4a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-btn:hover {
+    background-color: #3a3a5a;
+    border-color: #4fc3f7;
+}
+
+.quick-btn.active {
+    background-color: #0f3460;
+    border-color: #4fc3f7;
+}
+
+.quick-btn img {
+    width: 24px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.quick-btn span {
+    font-size: 0.85rem;
+}
+
+.search-form {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.search-form .form-group {
+    margin-bottom: 0;
+    position: relative;
+}
+
+.search-form .form-group label {
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.search-form .form-group input {
+    padding: 0.4rem 0.6rem;
+}
+
+.search-form #item-search {
+    width: 300px;
+}
+
+.search-form #quantity,
+.search-form #target-rate,
+.search-form #target-lines {
+    width: 80px;
+}
+
+.rate-display {
+    display: flex;
+    flex-direction: column;
+}
+
+.rate-display label {
+    margin-bottom: 0.25rem;
+}
+
+.rate-display span {
+    color: #4fc3f7;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.4rem 0;
+}
+
+.autocomplete-items {
+    position: absolute;
+    background-color: #2a2a4a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 100;
+    display: none;
+}
+
+.autocomplete-items.active {
+    display: block;
+}
+
+.autocomplete-item {
+    padding: 0.6rem;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+}
+
+.autocomplete-item:hover {
+    background-color: #0f3460;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.tree-container {
+    background-color: #16213e;
+    border-radius: 8px;
+    height: 500px;
+    position: relative;
+}
+
+#tree-network {
+    width: 100%;
+    height: 100%;
+}
+
+.raw-materials-section {
+    background-color: #16213e;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.raw-materials-section h3 {
+    margin-bottom: 1rem;
+    color: #4CAF50;
+}
+
+.raw-materials-section ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.raw-materials-section li {
+    background-color: #2a2a4a;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border-left: 3px solid #4CAF50;
+}
+
+/* Management Pages */
+.management-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.management-page h2 {
+    color: #4fc3f7;
+}
+
+.form-section {
+    background-color: #16213e;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.form-section h3 {
+    margin-bottom: 1rem;
+    color: #ffc107;
+}
+
+.list-section {
+    background-color: #16213e;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.list-section h3 {
+    margin-bottom: 1rem;
+}
+
+/* Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.data-table th {
+    background-color: #0f3460;
+    color: #4fc3f7;
+}
+
+.data-table tr:hover {
+    background-color: #2a2a4a;
+}
+
+/* Ingredients */
+.ingredients-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #2a2a4a;
+    border-radius: 4px;
+}
+
+.ingredients-section h4 {
+    margin-bottom: 1rem;
+}
+
+.ingredient-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.ingredient-row select {
+    flex: 2;
+    padding: 0.5rem;
+    background-color: #1a1a2e;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.ingredient-row input {
+    flex: 1;
+    padding: 0.5rem;
+    background-color: #1a1a2e;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #fff;
+    max-width: 100px;
+}
+
+/* Item Icons */
+.item-icon {
+    width: 48px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.item-icon-small {
+    width: 32px;
+    height: 33px;
+    object-fit: contain;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.autocomplete-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.autocomplete-item img {
+    width: 48px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+/* Raw materials list with icons */
+.raw-materials-section li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.raw-materials-section li img {
+    width: 40px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+/* Filter buttons */
+.filter-section {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-btn {
+    background-color: #2a2a4a;
+    border: 1px solid #444;
+}
+
+.filter-btn.active {
+    background-color: #4fc3f7;
+    color: #1a1a2e;
+    border-color: #4fc3f7;
+}
+
+/* Item Grid */
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.item-card {
+    background-color: #2a2a4a;
+    border-radius: 8px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.item-card:hover {
+    transform: translateY(-2px);
+    background-color: #3a3a5a;
+}
+
+.item-card-icon {
+    width: 64px;
+    height: 67px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.item-card-name {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.item-card-type {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+}
+
+.item-card-type.raw {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.item-card-type.craft {
+    background-color: #2196F3;
+    color: #fff;
+}
+
+/* Machine Grid */
+.machine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.machine-card {
+    background-color: #2a2a4a;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.machine-card:hover {
+    transform: translateY(-2px);
+    background-color: #3a3a5a;
+}
+
+.machine-card-icon {
+    width: 80px;
+    height: 83px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.machine-card-name {
+    font-size: 0.9rem;
+}
+
+/* Recipe result display */
+.recipe-result {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.item-icon-small {
+    width: 32px;
+    height: 33px;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+/* Production Summary Section */
+.production-summary-section {
+    background-color: #16213e;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.production-summary-section h3 {
+    margin-bottom: 1rem;
+    color: #4fc3f7;
+}
+
+.summary-tables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .summary-tables {
+        grid-template-columns: 1fr;
+    }
+}
+
+.summary-table-container {
+    background-color: #1a1a2e;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.summary-table-container h4 {
+    margin-bottom: 0.75rem;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.summary-table-container .data-table {
+    font-size: 0.9rem;
+}
+
+.summary-table-container .data-table td {
+    padding: 0.5rem;
+}
+
+.summary-table-container .data-table td img {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.highlight-lines {
+    color: #FF9800;
+    font-weight: bold;
+}
+
+.highlight-surplus {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Item card clickable styles */
+.item-card.clickable {
+    cursor: pointer;
+}
+
+.item-card.clickable:hover {
+    border: 2px solid #4fc3f7;
+}

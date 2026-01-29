@@ -1,0 +1,457 @@
+{
+  "originium_ore": {
+    "id": "originium_ore",
+    "name": "오리지늄 광물",
+    "is_raw": true
+  },
+  "amethyst_ore": {
+    "id": "amethyst_ore",
+    "name": "자수정 광석",
+    "is_raw": true
+  },
+  "perium_ore": {
+    "id": "perium_ore",
+    "name": "페리움 광석",
+    "is_raw": true
+  },
+  "buckwheat_flower": {
+    "id": "buckwheat_flower",
+    "name": "메밀꽃",
+    "is_raw": true
+  },
+  "buckwheat_seed": {
+    "id": "buckwheat_seed",
+    "name": "메밀꽃 씨앗",
+    "is_raw": true
+  },
+  "citron": {
+    "id": "citron",
+    "name": "시트론",
+    "is_raw": true
+  },
+  "citron_seed": {
+    "id": "citron_seed",
+    "name": "시트론 씨앗",
+    "is_raw": true
+  },
+  "sandleaf": {
+    "id": "sandleaf",
+    "name": "샌드리프",
+    "is_raw": true
+  },
+  "sandleaf_seed": {
+    "id": "sandleaf_seed",
+    "name": "샌드리프 씨앗",
+    "is_raw": true
+  },
+  "aketon": {
+    "id": "aketon",
+    "name": "아케톤",
+    "is_raw": true
+  },
+  "aketon_seed": {
+    "id": "aketon_seed",
+    "name": "아케톤 씨앗",
+    "is_raw": true
+  },
+  "wood": {
+    "id": "wood",
+    "name": "원목",
+    "is_raw": true
+  },
+  "flame_buckwheat": {
+    "id": "flame_buckwheat",
+    "name": "화염 메밀꽃",
+    "is_raw": true
+  },
+  "dark_citron": {
+    "id": "dark_citron",
+    "name": "다크 시트론",
+    "is_raw": true
+  },
+  "gray_barley": {
+    "id": "gray_barley",
+    "name": "회보리",
+    "is_raw": true
+  },
+  "bitter_pepper": {
+    "id": "bitter_pepper",
+    "name": "쓴맛 나는 고추",
+    "is_raw": true
+  },
+  "gray_barley_seed": {
+    "id": "gray_barley_seed",
+    "name": "회보리 씨앗",
+    "is_raw": true
+  },
+  "bitter_pepper_seed": {
+    "id": "bitter_pepper_seed",
+    "name": "쓴맛 나는 고추 씨앗",
+    "is_raw": true
+  },
+  "carbon_chunk": {
+    "id": "carbon_chunk",
+    "name": "카본 조각",
+    "is_raw": false
+  },
+  "origo_crust": {
+    "id": "origo_crust",
+    "name": "오리고 크러스트",
+    "is_raw": false
+  },
+  "amethyst_fiber": {
+    "id": "amethyst_fiber",
+    "name": "자수정 섬유",
+    "is_raw": false
+  },
+  "perium_chunk": {
+    "id": "perium_chunk",
+    "name": "페리움 조각",
+    "is_raw": false
+  },
+  "stable_carbon_chunk": {
+    "id": "stable_carbon_chunk",
+    "name": "안정된 카본 조각",
+    "is_raw": false
+  },
+  "refined_origo_crust": {
+    "id": "refined_origo_crust",
+    "name": "정련한 오리고 크러스트",
+    "is_raw": false
+  },
+  "crystite_fiber": {
+    "id": "crystite_fiber",
+    "name": "크리스톤 섬유",
+    "is_raw": false
+  },
+  "steel_chunk": {
+    "id": "steel_chunk",
+    "name": "강철 조각",
+    "is_raw": false
+  },
+  "carbon_powder": {
+    "id": "carbon_powder",
+    "name": "카본 가루",
+    "is_raw": false
+  },
+  "originium_powder": {
+    "id": "originium_powder",
+    "name": "오리지늄 가루",
+    "is_raw": false
+  },
+  "origo_crust_powder": {
+    "id": "origo_crust_powder",
+    "name": "오리고 크러스트 가루",
+    "is_raw": false
+  },
+  "amethyst_powder": {
+    "id": "amethyst_powder",
+    "name": "자수정 가루",
+    "is_raw": false
+  },
+  "perium_powder": {
+    "id": "perium_powder",
+    "name": "페리움 가루",
+    "is_raw": false
+  },
+  "sandleaf_powder": {
+    "id": "sandleaf_powder",
+    "name": "샌드리프 가루",
+    "is_raw": false
+  },
+  "aketon_powder": {
+    "id": "aketon_powder",
+    "name": "아케톤 가루",
+    "is_raw": false
+  },
+  "fine_buckwheat_powder": {
+    "id": "fine_buckwheat_powder",
+    "name": "고운 메밀꽃 가루",
+    "is_raw": false
+  },
+  "fine_citron_powder": {
+    "id": "fine_citron_powder",
+    "name": "고운 시트론 가루",
+    "is_raw": false
+  },
+  "fine_carbon_powder": {
+    "id": "fine_carbon_powder",
+    "name": "고운 카본 가루",
+    "is_raw": false
+  },
+  "fine_originium_powder": {
+    "id": "fine_originium_powder",
+    "name": "고운 오리지늄 가루",
+    "is_raw": false
+  },
+  "fine_origo_crust_powder": {
+    "id": "fine_origo_crust_powder",
+    "name": "고운 오리고 크러스트 가루",
+    "is_raw": false
+  },
+  "crystite_powder": {
+    "id": "crystite_powder",
+    "name": "크리스톤 가루",
+    "is_raw": false
+  },
+  "fine_perium_powder": {
+    "id": "fine_perium_powder",
+    "name": "고운 페리움 가루",
+    "is_raw": false
+  },
+  "amethyst_bottle": {
+    "id": "amethyst_bottle",
+    "name": "자수정 병",
+    "is_raw": false
+  },
+  "perium_bottle": {
+    "id": "perium_bottle",
+    "name": "페리움 병",
+    "is_raw": false
+  },
+  "crystite_bottle": {
+    "id": "crystite_bottle",
+    "name": "크리스톤 병",
+    "is_raw": false
+  },
+  "steel_bottle": {
+    "id": "steel_bottle",
+    "name": "강철병",
+    "is_raw": false
+  },
+  "amethyst_part": {
+    "id": "amethyst_part",
+    "name": "자수정 부품",
+    "is_raw": false
+  },
+  "perium_part": {
+    "id": "perium_part",
+    "name": "페리움 부품",
+    "is_raw": false
+  },
+  "crystite_part": {
+    "id": "crystite_part",
+    "name": "크리스톤 부품",
+    "is_raw": false
+  },
+  "steel_part": {
+    "id": "steel_part",
+    "name": "강철 부품",
+    "is_raw": false
+  },
+  "amethyst_equipment_part": {
+    "id": "amethyst_equipment_part",
+    "name": "자수정 장비 부품",
+    "is_raw": false
+  },
+  "perium_equipment_part": {
+    "id": "perium_equipment_part",
+    "name": "페리움 장비 부품",
+    "is_raw": false
+  },
+  "crystite_equipment_part": {
+    "id": "crystite_equipment_part",
+    "name": "크리스톤 장비 부품",
+    "is_raw": false
+  },
+  "small_canyon_battery": {
+    "id": "small_canyon_battery",
+    "name": "저용량 협곡 배터리",
+    "is_raw": false
+  },
+  "medium_canyon_battery": {
+    "id": "medium_canyon_battery",
+    "name": "중용량 협곡 배터리",
+    "is_raw": false
+  },
+  "large_canyon_battery": {
+    "id": "large_canyon_battery",
+    "name": "대용량 협곡 배터리",
+    "is_raw": false
+  },
+  "buckwheat_powder": {
+    "id": "buckwheat_powder",
+    "name": "메밀꽃 가루",
+    "is_raw": false
+  },
+  "citron_powder": {
+    "id": "citron_powder",
+    "name": "시트론 가루",
+    "is_raw": false
+  },
+  "flame_buckwheat_powder": {
+    "id": "flame_buckwheat_powder",
+    "name": "화염 메밀꽃 가루",
+    "is_raw": false
+  },
+  "dark_citron_powder": {
+    "id": "dark_citron_powder",
+    "name": "다크 시트론 가루",
+    "is_raw": false
+  },
+  "industrial_explosive": {
+    "id": "industrial_explosive",
+    "name": "공업 폭발물",
+    "is_raw": false
+  },
+  "buckwheat_healing_capsule_s": {
+    "id": "buckwheat_healing_capsule_s",
+    "name": "메밀꽃 치유 캡슐(소)",
+    "is_raw": false
+  },
+  "citron_canned": {
+    "id": "citron_canned",
+    "name": "시트론 통조림",
+    "is_raw": false
+  },
+  "buckwheat_canned_m": {
+    "id": "buckwheat_canned_m",
+    "name": "메밀꽃 치유 캡슐(중)",
+    "is_raw": false
+  },
+  "citron_canned_m": {
+    "id": "citron_canned_m",
+    "name": "시트론 통조림(중)",
+    "is_raw": false
+  },
+  "buckwheat_healing_capsule_l": {
+    "id": "buckwheat_healing_capsule_l",
+    "name": "메밀꽃 치유 캡슐(대)",
+    "is_raw": false
+  },
+  "citron_canned_l": {
+    "id": "citron_canned_l",
+    "name": "시트론 통조림(대)",
+    "is_raw": false
+  },
+  "buckwheat_potion_s": {
+    "id": "buckwheat_potion_s",
+    "name": "메밀꽃 회복제(소)",
+    "is_raw": false
+  },
+  "buckwheat_potion_l": {
+    "id": "buckwheat_potion_l",
+    "name": "메밀꽃 회복제(대)",
+    "is_raw": false
+  },
+  "citron_mixture_s": {
+    "id": "citron_mixture_s",
+    "name": "시트론 혼합제(소)",
+    "is_raw": false
+  },
+  "arts_engraved_bottle": {
+    "id": "arts_engraved_bottle",
+    "name": "아츠를 각인한 병",
+    "is_raw": false
+  },
+  "arts_imbued_bottle": {
+    "id": "arts_imbued_bottle",
+    "name": "아츠가 부여된 병",
+    "is_raw": false
+  },
+  "arts_engraved_metal_bottle": {
+    "id": "arts_engraved_metal_bottle",
+    "name": "아츠를 각인한 금속 병",
+    "is_raw": false
+  },
+  "arts_imbued_metal_bottle": {
+    "id": "arts_imbued_metal_bottle",
+    "name": "아츠가 부여된 금속 병",
+    "is_raw": false
+  },
+  "meat_substitute_buckwheat_stirfry": {
+    "id": "meat_substitute_buckwheat_stirfry",
+    "name": "대체육 메밀꽃 볶음",
+    "is_raw": false
+  },
+  "strange_handmade_candy": {
+    "id": "strange_handmade_candy",
+    "name": "이상한 수제 사탕",
+    "is_raw": false
+  },
+  "seshuka_steak": {
+    "id": "seshuka_steak",
+    "name": "세슈카풍 스테이크",
+    "is_raw": false
+  },
+  "instant_gomtang": {
+    "id": "instant_gomtang",
+    "name": "즉석 곰탕",
+    "is_raw": false
+  },
+  "meat_meeting": {
+    "id": "meat_meeting",
+    "name": "고기들의 회의",
+    "is_raw": false
+  },
+  "honeybee_pudding": {
+    "id": "honeybee_pudding",
+    "name": "꿀벌레 푸딩",
+    "is_raw": false
+  },
+  "opening_day_meat_soup": {
+    "id": "opening_day_meat_soup",
+    "name": "개업일 고깃국",
+    "is_raw": false
+  },
+  "jacob_legacy": {
+    "id": "jacob_legacy",
+    "name": "제이콥의 유산",
+    "is_raw": false
+  },
+  "cartilage_snack": {
+    "id": "cartilage_snack",
+    "name": "연골 과자",
+    "is_raw": false
+  },
+  "edible_hell_furnace": {
+    "id": "edible_hell_furnace",
+    "name": "식용 지옥의 용광로",
+    "is_raw": false
+  },
+  "john_elder_hamburger": {
+    "id": "john_elder_hamburger",
+    "name": "존 어르신의 햄버거",
+    "is_raw": false
+  },
+  "star_fusion_jelly": {
+    "id": "star_fusion_jelly",
+    "name": "스타 퓨전 젤리",
+    "is_raw": false
+  },
+  "secret_holy_tea": {
+    "id": "secret_holy_tea",
+    "name": "비법의 성신차",
+    "is_raw": false
+  },
+  "simple_pain_relief_ointment": {
+    "id": "simple_pain_relief_ointment",
+    "name": "간편 진통 연고",
+    "is_raw": false
+  },
+  "vitality_recovery_medicine": {
+    "id": "vitality_recovery_medicine",
+    "name": "원기 회복 탕약",
+    "is_raw": false
+  },
+  "base_emergency_ration": {
+    "id": "base_emergency_ration",
+    "name": "거점 지역의 비상식량",
+    "is_raw": false
+  },
+  "spicy_pickled_fruit": {
+    "id": "spicy_pickled_fruit",
+    "name": "매운 절임 과일",
+    "is_raw": false
+  },
+  "canyon_pie": {
+    "id": "canyon_pie",
+    "name": "협곡 파이",
+    "is_raw": false
+  },
+  "spicy_stir_fried_meat": {
+    "id": "spicy_stir_fried_meat",
+    "name": "매운 볶음 고기",
+    "is_raw": false
+  }
+}

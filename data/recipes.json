@@ -1,0 +1,592 @@
+{
+  "recipe_fine_originium_powder": {
+    "id": "recipe_fine_originium_powder",
+    "result": "fine_originium_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "originium_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_fine_origo_crust_powder": {
+    "id": "recipe_fine_origo_crust_powder",
+    "result": "fine_origo_crust_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "origo_crust_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_fine_carbon_powder": {
+    "id": "recipe_fine_carbon_powder",
+    "result": "fine_carbon_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "carbon_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_fine_perium_powder": {
+    "id": "recipe_fine_perium_powder",
+    "result": "fine_perium_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_fine_buckwheat_powder": {
+    "id": "recipe_fine_buckwheat_powder",
+    "result": "fine_buckwheat_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "buckwheat_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_fine_citron_powder": {
+    "id": "recipe_fine_citron_powder",
+    "result": "fine_citron_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "citron_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_crystite_powder": {
+    "id": "recipe_crystite_powder",
+    "result": "crystite_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_powder", "count": 2},
+      {"item_id": "sandleaf_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "polisher"
+  },
+  "recipe_buckwheat_healing_capsule_s": {
+    "id": "recipe_buckwheat_healing_capsule_s",
+    "result": "buckwheat_healing_capsule_s",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_bottle", "count": 5},
+      {"item_id": "buckwheat_powder", "count": 5}
+    ],
+    "craft_time": 10,
+    "machine": "filler"
+  },
+  "recipe_buckwheat_canned_m": {
+    "id": "recipe_buckwheat_canned_m",
+    "result": "buckwheat_canned_m",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_bottle", "count": 10},
+      {"item_id": "buckwheat_powder", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "filler"
+  },
+  "recipe_buckwheat_healing_capsule_l": {
+    "id": "recipe_buckwheat_healing_capsule_l",
+    "result": "buckwheat_healing_capsule_l",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "steel_bottle", "count": 10},
+      {"item_id": "fine_buckwheat_powder", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "filler"
+  },
+  "recipe_citron_canned": {
+    "id": "recipe_citron_canned",
+    "result": "citron_canned",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_bottle", "count": 5},
+      {"item_id": "citron_powder", "count": 5}
+    ],
+    "craft_time": 10,
+    "machine": "filler"
+  },
+  "recipe_citron_canned_m": {
+    "id": "recipe_citron_canned_m",
+    "result": "citron_canned_m",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_bottle", "count": 10},
+      {"item_id": "citron_powder", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "filler"
+  },
+  "recipe_citron_canned_l": {
+    "id": "recipe_citron_canned_l",
+    "result": "citron_canned_l",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "steel_bottle", "count": 10},
+      {"item_id": "fine_citron_powder", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "filler"
+  },
+  "recipe_amethyst_equipment_part": {
+    "id": "recipe_amethyst_equipment_part",
+    "result": "amethyst_equipment_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "origo_crust", "count": 5},
+      {"item_id": "amethyst_part", "count": 5}
+    ],
+    "craft_time": 10,
+    "machine": "equipment_parts_synthesizer"
+  },
+  "recipe_perium_equipment_part": {
+    "id": "recipe_perium_equipment_part",
+    "result": "perium_equipment_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "origo_crust", "count": 10},
+      {"item_id": "perium_part", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "equipment_parts_synthesizer"
+  },
+  "recipe_crystite_equipment_part": {
+    "id": "recipe_crystite_equipment_part",
+    "result": "crystite_equipment_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "refined_origo_crust", "count": 10},
+      {"item_id": "crystite_part", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "equipment_parts_synthesizer"
+  },
+  "recipe_industrial_explosive": {
+    "id": "recipe_industrial_explosive",
+    "result": "industrial_explosive",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_part", "count": 5},
+      {"item_id": "aketon_powder", "count": 1}
+    ],
+    "craft_time": 10,
+    "machine": "packager"
+  },
+  "recipe_small_canyon_battery": {
+    "id": "recipe_small_canyon_battery",
+    "result": "small_canyon_battery",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_part", "count": 5},
+      {"item_id": "originium_powder", "count": 10}
+    ],
+    "craft_time": 10,
+    "machine": "packager"
+  },
+  "recipe_medium_canyon_battery": {
+    "id": "recipe_medium_canyon_battery",
+    "result": "medium_canyon_battery",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_part", "count": 10},
+      {"item_id": "originium_powder", "count": 15}
+    ],
+    "craft_time": 10,
+    "machine": "packager"
+  },
+  "recipe_large_canyon_battery": {
+    "id": "recipe_large_canyon_battery",
+    "result": "large_canyon_battery",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "steel_part", "count": 10},
+      {"item_id": "fine_originium_powder", "count": 15}
+    ],
+    "craft_time": 10,
+    "machine": "packager"
+  },
+  "recipe_amethyst_bottle": {
+    "id": "recipe_amethyst_bottle",
+    "result": "amethyst_bottle",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_fiber", "count": 2}
+    ],
+    "craft_time": 2,
+    "machine": "molder"
+  },
+  "recipe_crystite_bottle": {
+    "id": "recipe_crystite_bottle",
+    "result": "crystite_bottle",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "crystite_fiber", "count": 2}
+    ],
+    "craft_time": 2,
+    "machine": "molder"
+  },
+  "recipe_perium_bottle": {
+    "id": "recipe_perium_bottle",
+    "result": "perium_bottle",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_chunk", "count": 2}
+    ],
+    "craft_time": 2,
+    "machine": "molder"
+  },
+  "recipe_steel_bottle": {
+    "id": "recipe_steel_bottle",
+    "result": "steel_bottle",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "steel_chunk", "count": 2}
+    ],
+    "craft_time": 2,
+    "machine": "molder"
+  },
+  "recipe_sandleaf": {
+    "id": "recipe_sandleaf",
+    "result": "sandleaf",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "sandleaf_seed", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "cultivator"
+  },
+  "recipe_citron": {
+    "id": "recipe_citron",
+    "result": "citron",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "citron_seed", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "cultivator"
+  },
+  "recipe_buckwheat_flower": {
+    "id": "recipe_buckwheat_flower",
+    "result": "buckwheat_flower",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "buckwheat_seed", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "cultivator"
+  },
+  "recipe_aketon": {
+    "id": "recipe_aketon",
+    "result": "aketon",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "aketon_seed", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "cultivator"
+  },
+  "recipe_buckwheat_seed": {
+    "id": "recipe_buckwheat_seed",
+    "result": "buckwheat_seed",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "buckwheat_flower", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "seed_extractor"
+  },
+  "recipe_citron_seed": {
+    "id": "recipe_citron_seed",
+    "result": "citron_seed",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "citron", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "seed_extractor"
+  },
+  "recipe_sandleaf_seed": {
+    "id": "recipe_sandleaf_seed",
+    "result": "sandleaf_seed",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "sandleaf", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "seed_extractor"
+  },
+  "recipe_aketon_seed": {
+    "id": "recipe_aketon_seed",
+    "result": "aketon_seed",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "aketon", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "seed_extractor"
+  },
+  "recipe_gray_barley_seed": {
+    "id": "recipe_gray_barley_seed",
+    "result": "gray_barley_seed",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "gray_barley", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "seed_extractor"
+  },
+  "recipe_bitter_pepper_seed": {
+    "id": "recipe_bitter_pepper_seed",
+    "result": "bitter_pepper_seed",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "bitter_pepper", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "seed_extractor"
+  },
+  "recipe_amethyst_part": {
+    "id": "recipe_amethyst_part",
+    "result": "amethyst_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_fiber", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "parts_processor"
+  },
+  "recipe_perium_part": {
+    "id": "recipe_perium_part",
+    "result": "perium_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_chunk", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "parts_processor"
+  },
+  "recipe_crystite_part": {
+    "id": "recipe_crystite_part",
+    "result": "crystite_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "crystite_fiber", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "parts_processor"
+  },
+  "recipe_steel_part": {
+    "id": "recipe_steel_part",
+    "result": "steel_part",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "steel_chunk", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "parts_processor"
+  },
+  "recipe_perium_chunk": {
+    "id": "recipe_perium_chunk",
+    "result": "perium_chunk",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_ore", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_amethyst_fiber": {
+    "id": "recipe_amethyst_fiber",
+    "result": "amethyst_fiber",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_ore", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_origo_crust": {
+    "id": "recipe_origo_crust",
+    "result": "origo_crust",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "originium_ore", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_refined_origo_crust": {
+    "id": "recipe_refined_origo_crust",
+    "result": "refined_origo_crust",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "fine_origo_crust_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_steel_chunk": {
+    "id": "recipe_steel_chunk",
+    "result": "steel_chunk",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "fine_perium_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_crystite_fiber": {
+    "id": "recipe_crystite_fiber",
+    "result": "crystite_fiber",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "crystite_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_stable_carbon_chunk": {
+    "id": "recipe_stable_carbon_chunk",
+    "result": "stable_carbon_chunk",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "fine_carbon_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_fine_origo_crust_powder_refinery": {
+    "id": "recipe_fine_origo_crust_powder_refinery",
+    "result": "fine_origo_crust_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "fine_originium_powder", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_carbon_chunk_buckwheat": {
+    "id": "recipe_carbon_chunk_buckwheat",
+    "result": "carbon_chunk",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "buckwheat_flower", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_carbon_chunk_sandleaf": {
+    "id": "recipe_carbon_chunk_sandleaf",
+    "result": "carbon_chunk",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "sandleaf", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "refinery"
+  },
+  "recipe_perium_powder": {
+    "id": "recipe_perium_powder",
+    "result": "perium_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "perium_chunk", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_amethyst_powder": {
+    "id": "recipe_amethyst_powder",
+    "result": "amethyst_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "amethyst_fiber", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_originium_powder": {
+    "id": "recipe_originium_powder",
+    "result": "originium_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "originium_ore", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_carbon_powder": {
+    "id": "recipe_carbon_powder",
+    "result": "carbon_powder",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "carbon_chunk", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_origo_crust_powder": {
+    "id": "recipe_origo_crust_powder",
+    "result": "origo_crust_powder",
+    "result_count": 1,
+    "ingredients": [
+      {"item_id": "origo_crust", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_buckwheat_powder": {
+    "id": "recipe_buckwheat_powder",
+    "result": "buckwheat_powder",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "buckwheat_flower", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_citron_powder": {
+    "id": "recipe_citron_powder",
+    "result": "citron_powder",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "citron", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_sandleaf_powder": {
+    "id": "recipe_sandleaf_powder",
+    "result": "sandleaf_powder",
+    "result_count": 3,
+    "ingredients": [
+      {"item_id": "sandleaf", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  },
+  "recipe_aketon_powder": {
+    "id": "recipe_aketon_powder",
+    "result": "aketon_powder",
+    "result_count": 2,
+    "ingredients": [
+      {"item_id": "aketon", "count": 1}
+    ],
+    "craft_time": 2,
+    "machine": "grinder"
+  }
+}

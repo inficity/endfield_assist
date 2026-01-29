@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}레시피 - Endfield Recipe Tree{% endblock %}
+
+{% block content %}
+<div class="management-page">
+    <h2>레시피</h2>
+
+    <div class="list-section">
+        <h3>레시피 목록 ({{ recipes | length }}개)</h3>
+        {% if recipes %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>설비</th>
+                    <th>재료</th>
+                    <th>결과</th>
+                    <th>시간</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in recipes %}
+                <tr>
+                    <td>{{ machines_dict.get(recipe.machine, '-') }}</td>
+                    <td>
+                        {% for ing in recipe.ingredients %}
+                        <img src="/static/icons/{{ ing.item_id }}.png" class="item-icon-small" onerror="this.style.display='none'">
+                        {{ items_dict.get(ing.item_id, ing.item_id) }} x{{ ing.count }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div class="recipe-result">
+                            <img src="/static/icons/{{ recipe.result }}.png" class="item-icon-small" onerror="this.style.display='none'">
+                            <span>{{ items_dict.get(recipe.result, recipe.result) }} x{{ recipe.result_count }}</span>
+                        </div>
+                    </td>
+                    <td>{{ recipe.craft_time }}초</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color: #888;">레시피가 없습니다.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
