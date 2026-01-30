@@ -196,18 +196,10 @@ class RecipeTreeService:
             else:
                 color = "#FF9800"  # Orange for multiple lines
 
-            # Build node label (rate shown on edges, name on icon)
-            if is_raw:
-                label = f"공급 {lines_needed}개"
-            else:
-                if machine_name:
-                    label = f"[{machine_name}]\n라인 {lines_needed}개"
-                else:
-                    label = f"라인 {lines_needed}개"
-
+            # Label is now empty - count badge shown via frontend
             node = {
                 "id": current_node_id,
-                "label": label,
+                "label": "",
                 "color": color,
                 "item_id": item_id,
                 "rate": required_rate,
@@ -297,6 +289,10 @@ class RecipeTreeService:
         # Track rates per bundle per item for accurate port calculation
         bundle_item_rates = defaultdict(lambda: defaultdict(float))  # bundle_id -> item_id -> rate
 
+        # Track merged nodes per bundle to merge same items (both raw and processed)
+        # Key: (bundle_id, item_id) -> {"node_id": int, "rate": float, "base_rate": float, "level": int}
+        merged_nodes = {}
+
         def get_node_id():
             node_id_counter[0] += 1
             return node_id_counter[0]
@@ -306,6 +302,7 @@ class RecipeTreeService:
             required_rate: float,
             parent_node_id: Optional[int],
             bundle_id: str,
+            level: int = 0,
         ):
             item = self.items.get(item_id)
             if not item:
@@ -317,7 +314,6 @@ class RecipeTreeService:
             # This is the key difference: split point production goes to its own bundle
             current_bundle_id = f"split_{item_id}" if is_split else bundle_id
 
-            current_node_id = get_node_id()
             recipe = self.get_recipe_for_item(item_id)
 
             machine_name = None
@@ -327,16 +323,47 @@ class RecipeTreeService:
                 machine_name = machine.name if machine else recipe.machine
                 machine_id = recipe.machine
 
-            lines_needed = 0
             base_rate = 0
             is_raw = item.is_raw or not recipe
 
             if is_raw:
                 base_rate = self.RAW_MATERIAL_SUPPLY_RATE
-                lines_needed = math.ceil(required_rate / base_rate)
             elif recipe and recipe.craft_time > 0:
                 base_rate = self._get_base_production_rate(recipe)
-                lines_needed = math.ceil(required_rate / base_rate) if base_rate > 0 else 0
+
+            # Merge nodes within the same bundle (both raw and processed items)
+            merge_key = (current_bundle_id, item_id)
+            if merge_key in merged_nodes:
+                # Already have a node for this item in this bundle
+                # Just add an edge and accumulate rate, don't create new node or recurse
+                existing = merged_nodes[merge_key]
+                existing["rate"] += required_rate
+                # Update level to maximum (deepest occurrence)
+                existing["level"] = max(existing["level"], level)
+                if parent_node_id is not None:
+                    edges.append({
+                        "from": existing["node_id"],
+                        "to": parent_node_id,
+                        "label": f"{self._format_rate(required_rate)}/min",
+                        "arrows": "to",
+                    })
+                # Update summary and bundle tracking
+                summary[item_id]["rate"] += required_rate
+                summary[item_id]["lines"] = math.ceil(
+                    summary[item_id]["rate"] / summary[item_id]["base_rate"]
+                ) if summary[item_id]["base_rate"] > 0 else 0
+                bundle_item_rates[current_bundle_id][item_id] += required_rate
+                return
+
+            # First occurrence - create node and register
+            current_node_id = get_node_id()
+            lines_needed = math.ceil(required_rate / base_rate) if base_rate > 0 else 0
+            merged_nodes[merge_key] = {
+                "node_id": current_node_id,
+                "rate": required_rate,
+                "base_rate": base_rate,
+                "level": level,
+            }
 
             # Determine node color
             if is_split:
@@ -348,18 +375,10 @@ class RecipeTreeService:
             else:
                 color = "#FF9800"  # Orange for multiple lines
 
-            # Build node label
-            if is_raw:
-                label = f"공급 {lines_needed}개"
-            else:
-                if machine_name:
-                    label = f"[{machine_name}]\n라인 {lines_needed}개"
-                else:
-                    label = f"라인 {lines_needed}개"
-
+            # Label is now empty - count badge shown via frontend
             node = {
                 "id": current_node_id,
-                "label": label,
+                "label": "",
                 "color": color,
                 "item_id": item_id,
                 "rate": required_rate,
@@ -368,6 +387,7 @@ class RecipeTreeService:
                 "machine": machine_name,
                 "is_split_point": is_split,
                 "bundle_id": current_bundle_id,
+                "level": level,
             }
             nodes.append(node)
 
@@ -426,7 +446,7 @@ class RecipeTreeService:
                 ingredient_rate = (ingredient.count * required_rate) / recipe.result_count
                 ing_id = ingredient.item_id
 
-                traverse(ing_id, ingredient_rate, current_node_id, current_bundle_id)
+                traverse(ing_id, ingredient_rate, current_node_id, current_bundle_id, level + 1)
 
         # Process each target item
         for item_spec in items_with_lines:
@@ -448,8 +468,87 @@ class RecipeTreeService:
             bundle_id = f"target_{item_id}"
             traverse(item_id, target_rate, None, bundle_id)
 
+        # Recalculate rates for all nodes by propagating from consumers to suppliers
+        # Process in level order (lowest level = consumers first)
+        sorted_keys = sorted(merged_nodes.keys(),
+                            key=lambda k: merged_nodes[k]["level"])
+
+        # Calculate demands iteratively - update each item's rate before calculating its ingredient demands
+        supplier_demands = defaultdict(float)  # (bundle_id, item_id) -> total demand
+
+        for merge_key in sorted_keys:
+            bundle_id, item_id = merge_key
+            merge_info = merged_nodes[merge_key]
+
+            # First, update this item's rate if it has calculated demand from its consumers
+            if merge_key in supplier_demands:
+                merge_info["rate"] = supplier_demands[merge_key]
+
+            # Now use the (possibly updated) rate to calculate demands for ingredients
+            total_rate = merge_info["rate"]
+            recipe = self.get_recipe_for_item(item_id)
+            if recipe and recipe.result_count > 0:
+                for ingredient in recipe.ingredients:
+                    ing_rate = (ingredient.count * total_rate) / recipe.result_count
+                    ing_key = (bundle_id, ingredient.item_id)
+                    supplier_demands[ing_key] += ing_rate
+
+        # Now update all nodes, edges, and bundle_item_rates with final rates
+        for merge_key, merge_info in merged_nodes.items():
+            bundle_id, item_id = merge_key
+            total_rate = merge_info["rate"]
+            base_rate = merge_info["base_rate"]
+            final_level = merge_info["level"]
+            lines_needed = math.ceil(total_rate / base_rate) if base_rate > 0 else 0
+            node_id = merge_info["node_id"]
+
+            # Update bundle_item_rates with corrected rate
+            bundle_item_rates[bundle_id][item_id] = total_rate
+
+            # Find and update the node
+            for node in nodes:
+                if node["id"] == node_id:
+                    node["rate"] = total_rate
+                    node["lines"] = lines_needed
+                    node["level"] = final_level
+                    break
+
+            # Update incoming edges for this node
+            recipe = self.get_recipe_for_item(item_id)
+            if recipe and recipe.result_count > 0:
+                for ingredient in recipe.ingredients:
+                    correct_rate = (ingredient.count * total_rate) / recipe.result_count
+                    ing_merge_key = (bundle_id, ingredient.item_id)
+                    if ing_merge_key in merged_nodes:
+                        ing_node_id = merged_nodes[ing_merge_key]["node_id"]
+                        for edge in edges:
+                            if edge["from"] == ing_node_id and edge["to"] == node_id:
+                                edge["label"] = f"{self._format_rate(correct_rate)}/min"
+                                break
+
+        # Recalculate summary by aggregating rates from all bundles
+        for item_id in summary:
+            total_rate = 0
+            for bid in bundle_item_rates:
+                total_rate += bundle_item_rates[bid].get(item_id, 0)
+            base_rate = summary[item_id]["base_rate"]
+            summary[item_id]["rate"] = total_rate
+            lines = math.ceil(total_rate / base_rate) if base_rate > 0 else 0
+            summary[item_id]["lines"] = lines
+            summary[item_id]["actual_rate"] = lines * base_rate if base_rate > 0 else 0
+            summary[item_id]["surplus"] = summary[item_id]["actual_rate"] - total_rate
+
+        # Calculate tracks (vertical positions) for each node
+        self._calculate_tracks(nodes, edges)
+
         # Build bundles information
         bundles = self._build_bundles(
+            bundle_productions, bundle_consumptions, bundle_item_rates,
+            summary, split_points_set, items_with_lines
+        )
+
+        # Build allocatable units (finer-grained for site allocation)
+        allocatable_units = self._build_allocatable_units(
             bundle_productions, bundle_consumptions, bundle_item_rates,
             summary, split_points_set, items_with_lines
         )
@@ -457,8 +556,96 @@ class RecipeTreeService:
         return {
             "tree": {"nodes": nodes, "edges": edges},
             "bundles": bundles,
+            "allocatable_units": allocatable_units,
             "summary": list(summary.values()),
         }
+
+    def _calculate_tracks(self, nodes: list, edges: list):
+        """
+        Calculate track (vertical position) for each node.
+
+        Nodes that branch into multiple paths are placed between their targets.
+        This helps create a cleaner layout with less edge crossing.
+        Each target item's tree gets its own track range to avoid overlap.
+        """
+        if not nodes:
+            return
+
+        # Build adjacency maps
+        # outgoing: node_id -> [target_node_ids] (consumers of this node)
+        # incoming: node_id -> [source_node_ids] (suppliers to this node)
+        outgoing = defaultdict(list)
+        incoming = defaultdict(list)
+
+        for edge in edges:
+            from_id = edge["from"]
+            to_id = edge["to"]
+            outgoing[from_id].append(to_id)
+            incoming[to_id].append(from_id)
+
+        # Create node lookup
+        node_map = {n["id"]: n for n in nodes}
+
+        # Find root nodes (no outgoing edges - final products)
+        root_ids = [n["id"] for n in nodes if not outgoing.get(n["id"])]
+
+        track_assignment = {}
+        track_offset = 0  # Offset for each tree to avoid overlap
+
+        # Process each root's tree separately
+        for root_id in root_ids:
+            # Find all nodes in this root's tree (BFS from root following incoming edges)
+            tree_nodes = set()
+            queue = [root_id]
+            while queue:
+                current = queue.pop(0)
+                if current in tree_nodes:
+                    continue
+                tree_nodes.add(current)
+                # Add all suppliers of this node
+                for supplier_id in incoming.get(current, []):
+                    if supplier_id not in tree_nodes:
+                        queue.append(supplier_id)
+
+            # Assign tracks for this tree
+            track_assignment[root_id] = track_offset
+
+            # Get immediate sources and assign tracks
+            immediate_sources = incoming.get(root_id, [])
+            for i, source_id in enumerate(immediate_sources):
+                track_assignment[source_id] = track_offset + i
+
+            # Propagate tracks within this tree
+            tree_nodes_sorted = sorted(
+                [n for n in nodes if n["id"] in tree_nodes],
+                key=lambda n: n.get("level", 0)
+            )
+
+            for node in tree_nodes_sorted:
+                node_id = node["id"]
+                if node_id in track_assignment:
+                    continue
+
+                target_ids = outgoing.get(node_id, [])
+                if target_ids:
+                    target_tracks = [track_assignment.get(tid) for tid in target_ids
+                                    if tid in track_assignment]
+                    if target_tracks:
+                        track_assignment[node_id] = sum(target_tracks) / len(target_tracks)
+                    else:
+                        track_assignment[node_id] = track_offset
+                else:
+                    track_assignment[node_id] = track_offset
+
+            # Calculate max track used by this tree and update offset for next tree
+            tree_tracks = [track_assignment.get(nid, 0) for nid in tree_nodes]
+            if tree_tracks:
+                max_track = max(tree_tracks)
+                track_offset = max_track + 1.5  # Gap between trees
+
+        # Assign tracks to nodes
+        for node in nodes:
+            node["track"] = track_assignment.get(node["id"], 0)
 
     def _build_bundles(
         self,
@@ -475,6 +662,7 @@ class RecipeTreeService:
         Port calculation uses bundle-specific rates, not global summary.
         """
         target_item_ids = {item["id"] for item in target_items}
+        target_lines_map = {item["id"]: item.get("lines", 1) for item in target_items}
         bundles = []
 
         # Merge bundles with identical item sets
@@ -581,15 +769,201 @@ class RecipeTreeService:
                     })
                     port_count += lines
 
+            # Calculate total lines for this bundle
+            bundle_lines = 0
+            for bid in bundle_ids:
+                if bid.startswith("target_"):
+                    actual_id = bid[7:]
+                    bundle_lines += target_lines_map.get(actual_id, 1)
+                elif bid.startswith("split_"):
+                    actual_id = bid[6:]
+                    if actual_id in summary:
+                        bundle_lines += summary[actual_id].get("lines", 1)
+            # Default to 1 if no lines found
+            if bundle_lines == 0:
+                bundle_lines = 1
+
+            # Calculate port per line
+            port_per_line = math.ceil(port_count / bundle_lines) if bundle_lines > 0 else port_count
+
             bundles.append({
                 "id": bundle_ids[0],
                 "name": bundle_name,
                 "machines": dict(machines),
                 "ports": ports,
                 "port_count": port_count,
+                "lines": bundle_lines,
+                "port_per_line": port_per_line,
                 "item_ids": list(item_ids),
             })
 
             bundle_index += 1
 
         return bundles
+
+    def _build_allocatable_units(
+        self,
+        bundle_productions: dict,
+        bundle_consumptions: dict,
+        bundle_item_rates: dict,
+        summary: dict,
+        split_points: set,
+        target_items: list[dict]
+    ) -> list[dict]:
+        """
+        Build allocatable units - units for site allocation.
+
+        Each target item and each split point becomes a single allocatable unit
+        with total_lines indicating how many lines can be distributed.
+        """
+        # Build lookup for target item lines
+        target_lines_map = {item["id"]: item.get("lines", 1) for item in target_items}
+        units = []
+
+        # Process each bundle_id separately (no merging)
+        for bundle_id, item_ids in bundle_productions.items():
+            # Get consumed split points for this specific bundle
+            consumed_splits = bundle_consumptions.get(bundle_id, set())
+
+            # Calculate total machines and ports using this bundle's rates
+            total_machines = defaultdict(int)
+            total_ports = []
+            total_port_count = 0
+
+            for item_id in item_ids:
+                if item_id not in summary:
+                    continue
+
+                item_summary = summary[item_id]
+                is_raw = item_summary["is_raw"]
+                base_rate = item_summary["base_rate"]
+
+                # Use this bundle's specific rate for the item
+                bundle_rate = bundle_item_rates[bundle_id].get(item_id, 0)
+                if base_rate > 0:
+                    lines = math.ceil(bundle_rate / base_rate)
+                else:
+                    lines = 0
+
+                if is_raw:
+                    if lines > 0:
+                        total_ports.append({
+                            "item_id": item_id,
+                            "name": item_summary["name"],
+                            "count": lines,
+                            "type": "raw",
+                        })
+                        total_port_count += lines
+                elif item_summary["machine"] and lines > 0:
+                    machine_name = item_summary["machine"]
+                    total_machines[machine_name] += lines
+
+            # Add ports for consumed split points
+            for split_id in consumed_splits:
+                if split_id in summary:
+                    split_summary = summary[split_id]
+                    base_rate = split_summary["base_rate"]
+                    if base_rate > 0:
+                        total_consumed = 0
+                        for bid, consumptions in bundle_consumptions.items():
+                            if split_id in consumptions:
+                                for iid in bundle_productions.get(bid, []):
+                                    total_consumed += bundle_item_rates[bid].get(iid, 0)
+
+                        bundle_total = sum(bundle_item_rates[bundle_id].values())
+                        if total_consumed > 0:
+                            proportion = bundle_total / total_consumed
+                        else:
+                            proportion = 1.0
+
+                        split_lines = math.ceil(split_summary["lines"] * proportion)
+                        split_lines = max(1, split_lines)
+                    else:
+                        split_lines = split_summary["lines"]
+
+                    total_ports.append({
+                        "item_id": split_id,
+                        "name": split_summary["name"],
+                        "count": split_lines,
+                        "type": "split",
+                    })
+                    total_port_count += split_lines
+
+            # Create a single unit with total_lines info (not individual lines)
+            if bundle_id.startswith("target_"):
+                actual_id = bundle_id[7:]
+                item = self.items.get(actual_id)
+                target_lines = target_lines_map.get(actual_id, 1)
+
+                if item:
+                    unit_name = f"{item.name} 라인"
+                else:
+                    unit_name = bundle_id
+
+                # Calculate per-line values
+                line_machines = {k: math.ceil(v / target_lines) for k, v in total_machines.items()}
+                line_ports = [
+                    {**p, "count": math.ceil(p["count"] / target_lines)}
+                    for p in total_ports
+                ]
+                port_per_line = sum(p["count"] for p in line_ports)
+
+                units.append({
+                    "id": bundle_id,
+                    "name": unit_name,
+                    "type": "target",
+                    "machines": line_machines,
+                    "ports": line_ports,
+                    "port_per_line": port_per_line,
+                    "total_lines": target_lines,
+                    "port_count": port_per_line * target_lines,
+                    "item_ids": list(item_ids),
+                })
+
+            elif bundle_id.startswith("split_"):
+                actual_id = bundle_id[6:]
+                item = self.items.get(actual_id)
+
+                # Get lines for this split point from summary
+                split_lines = 1
+                if actual_id in summary:
+                    split_lines = summary[actual_id].get("lines", 1)
+
+                if item:
+                    unit_name = f"{item.name} 생산"
+                else:
+                    unit_name = bundle_id
+
+                # Calculate per-line values
+                line_machines = {k: math.ceil(v / split_lines) for k, v in total_machines.items()}
+                line_ports = [
+                    {**p, "count": math.ceil(p["count"] / split_lines)}
+                    for p in total_ports
+                ]
+                port_per_line = sum(p["count"] for p in line_ports)
+
+                units.append({
+                    "id": bundle_id,
+                    "name": unit_name,
+                    "type": "split",
+                    "machines": line_machines,
+                    "ports": line_ports,
+                    "port_per_line": port_per_line,
+                    "total_lines": split_lines,
+                    "port_count": port_per_line * split_lines,
+                    "item_ids": list(item_ids),
+                })
+            else:
+                units.append({
+                    "id": bundle_id,
+                    "name": bundle_id,
+                    "type": "other",
+                    "machines": dict(total_machines),
+                    "ports": total_ports,
+                    "port_per_line": total_port_count,
+                    "total_lines": 1,
+                    "port_count": total_port_count,
+                    "item_ids": list(item_ids),
+                })
+
+        return units

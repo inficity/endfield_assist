@@ -929,3 +929,217 @@ body {
     margin-left: 0.5rem;
     vertical-align: middle;
 }
+
+/* Site Allocation Section */
+.site-allocation-section {
+    background-color: #16213e;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.site-allocation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.site-allocation-header h3 {
+    margin: 0;
+    color: #4fc3f7;
+}
+
+.site-allocation-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.site-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.site-card {
+    background-color: #1a1a2e;
+    border-radius: 8px;
+    border: 1px solid #333;
+    overflow: hidden;
+}
+
+.site-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #0f3460;
+}
+
+.site-card-header h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #fff;
+}
+
+.site-card-header .site-config {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.port-usage {
+    padding: 0.5rem 1rem;
+    background-color: #2a2a4a;
+}
+
+.port-usage-bar {
+    height: 8px;
+    background-color: #1a1a2e;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+
+.port-usage-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.port-usage-fill.warning {
+    background-color: #FF9800;
+}
+
+.port-usage-fill.overflow {
+    background-color: #f44336;
+}
+
+.port-usage-text {
+    font-size: 0.8rem;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+}
+
+.port-usage-text.overflow {
+    color: #f44336;
+    font-weight: bold;
+}
+
+.site-card-content {
+    padding: 0.75rem 1rem;
+    min-height: 60px;
+}
+
+.site-bundle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.site-bundle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    background-color: #2a2a4a;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.site-bundle-item .bundle-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.site-bundle-item .bundle-ports {
+    color: #4fc3f7;
+    margin: 0 0.5rem;
+    white-space: nowrap;
+}
+
+.site-bundle-item .remove-bundle-btn {
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+    padding: 0.2rem;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.site-bundle-item .remove-bundle-btn:hover {
+    color: #ff6659;
+}
+
+.site-add-bundle {
+    margin-top: 0.5rem;
+}
+
+.site-add-bundle select {
+    width: 100%;
+    padding: 0.4rem;
+    background-color: #2a2a4a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #aaa;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.site-add-bundle select:hover {
+    border-color: #4fc3f7;
+}
+
+/* Unassigned bundles */
+.unassigned-bundles-container {
+    margin-top: 1rem;
+}
+
+.unassigned-bundles-container h4 {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.unassigned-bundles-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.unassigned-bundle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background-color: #2a2a4a;
+    border: 1px dashed #666;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.unassigned-bundle .bundle-ports {
+    color: #FF9800;
+    font-weight: bold;
+}
+
+.unassigned-bundle select {
+    padding: 0.2rem 0.4rem;
+    background-color: #1a1a2e;
+    border: 1px solid #444;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.no-unassigned {
+    color: #4CAF50;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+}
