@@ -20,26 +20,28 @@
                 <span>시트론 통조림(대)</span>
             </button>
         </div>
-        <div class="search-form">
-            <div class="form-group">
-                <label for="item-search">아이템 검색</label>
-                <input type="text" id="item-search" placeholder="아이템 이름 검색..." autocomplete="off">
-                <div id="autocomplete-list" class="autocomplete-items"></div>
+
+        <!-- 멀티 아이템 선택 영역 -->
+        <div class="multi-item-section">
+            <div class="multi-item-header">
+                <h3>생산 아이템 목록</h3>
+                <button id="add-item-btn" class="btn btn-small btn-primary">+ 아이템 추가</button>
             </div>
-            <div class="form-group">
-                <label for="target-lines">최종 설비 라인 수</label>
-                <div class="number-input-group">
-                    <button type="button" style="min-width:40px;min-height:40px;font-size:1.5rem;background:#2a2a4a;border:1px solid #444;color:#fff;border-radius:4px;cursor:pointer;" onclick="adjustLines(-1)">−</button>
-                    <input type="text" id="target-lines" value="1" style="width:40px;text-align:center;">
-                    <button type="button" style="min-width:40px;min-height:40px;font-size:1.5rem;background:#2a2a4a;border:1px solid #444;color:#fff;border-radius:4px;cursor:pointer;" onclick="adjustLines(1)">+</button>
+            <div id="multi-item-list" class="multi-item-list">
+                <!-- 동적으로 아이템 행 추가 -->
+            </div>
+            <div id="add-item-form" class="add-item-form" style="display: none;">
+                <div class="form-group">
+                    <input type="text" id="new-item-search" placeholder="아이템 검색..." autocomplete="off">
+                    <div id="new-autocomplete-list" class="autocomplete-items"></div>
                 </div>
+                <button id="cancel-add-btn" class="btn btn-small btn-secondary">취소</button>
             </div>
-            <div class="form-group rate-display" id="rate-display" style="display: none;">
-                <label>목표 생산률</label>
-                <span id="calculated-rate">-</span>
+            <div class="multi-item-actions">
+                <button id="show-multi-tree-btn" class="btn btn-primary">트리 계산</button>
+                <button id="toggle-graph-btn" class="btn btn-secondary" onclick="toggleGraph()">그래프 숨기기</button>
             </div>
-            <button id="show-tree-btn" class="btn btn-primary">트리 표시</button>
-            <button id="toggle-graph-btn" class="btn btn-secondary" onclick="toggleGraph()">그래프 숨기기</button>
+            <p class="split-hint">💡 그래프에서 중간재 노드를 클릭하면 분할점으로 설정할 수 있습니다.</p>
         </div>
     </div>
 
@@ -47,8 +49,16 @@
         <div id="tree-network"></div>
     </div>
 
+    <!-- 묶음별 요약 -->
+    <div class="bundles-section" id="bundles-section" style="display: none;">
+        <h3>공장 묶음별 요약</h3>
+        <div id="bundles-container" class="bundles-container">
+            <!-- 동적으로 묶음 카드 추가 -->
+        </div>
+    </div>
+
     <div class="production-summary-section" id="production-summary-section" style="display: none;">
-        <h3>생산 라인 요약</h3>
+        <h3>전체 생산 라인 요약</h3>
         <div class="summary-tables">
             <div class="summary-table-container">
                 <h4>생산 아이템</h4>

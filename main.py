@@ -6,7 +6,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from models import (
-    Item, Recipe, Machine, ItemCreate, ItemUpdate, RecipeCreate, RecipeUpdate
+    Item, Recipe, Machine, ItemCreate, ItemUpdate, RecipeCreate, RecipeUpdate,
+    MultiProductionRequest
 )
 from services.recipe_tree import RecipeTreeService
 
@@ -294,3 +295,36 @@ async def search_items(q: str = ""):
         if q_lower in item.name.lower() or q_lower in item.id.lower()
     ]
     return results
+
+
+@app.post("/api/multi-production-tree")
+async def get_multi_production_tree(request: MultiProductionRequest):
+    """
+    Get production tree for multiple items with split points.
+    Calculates warehouse output ports needed and groups production lines into bundles.
+    """
+    items = load_items()
+    recipes = load_recipes()
+    machines = load_machines()
+
+    # Validate all items exist
+    for item_spec in request.items:
+        if item_spec.id not in items:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Item not found: {item_spec.id}"
+            )
+
+    service = RecipeTreeService(items, recipes, machines)
+
+    items_with_lines = [
+        {"id": item.id, "lines": item.lines}
+        for item in request.items
+    ]
+
+    result = service.build_multi_production_tree(
+        items_with_lines,
+        request.split_points
+    )
+
+    return result

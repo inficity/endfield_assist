@@ -54,3 +54,13 @@ class RecipeUpdate(BaseModel):
     ingredients: Optional[list[Ingredient]] = None
     craft_time: Optional[float] = None
     machine: Optional[str] = None
+
+
+class ItemWithLines(BaseModel):
+    id: str
+    lines: int = 1
+
+
+class MultiProductionRequest(BaseModel):
+    items: list[ItemWithLines]
+    split_points: list[str] = []
