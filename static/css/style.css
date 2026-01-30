@@ -237,9 +237,43 @@ body {
 }
 
 .search-form #quantity,
-.search-form #target-rate,
-.search-form #target-lines {
+.search-form #target-rate {
     width: 80px;
+}
+
+.number-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.number-input-group input {
+    width: 36px;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.number-input-group input::-webkit-outer-spin-button,
+.number-input-group input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.num-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #444;
+    background-color: #2a2a4a;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.num-btn:hover {
+    background-color: #3a3a5a;
+    border-color: #4fc3f7;
 }
 
 .rate-display {

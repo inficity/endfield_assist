@@ -28,13 +28,18 @@
             </div>
             <div class="form-group">
                 <label for="target-lines">최종 설비 라인 수</label>
-                <input type="number" id="target-lines" value="1" min="1" step="1">
+                <div class="number-input-group">
+                    <button type="button" style="min-width:40px;min-height:40px;font-size:1.5rem;background:#2a2a4a;border:1px solid #444;color:#fff;border-radius:4px;cursor:pointer;" onclick="adjustLines(-1)">−</button>
+                    <input type="text" id="target-lines" value="1" style="width:40px;text-align:center;">
+                    <button type="button" style="min-width:40px;min-height:40px;font-size:1.5rem;background:#2a2a4a;border:1px solid #444;color:#fff;border-radius:4px;cursor:pointer;" onclick="adjustLines(1)">+</button>
+                </div>
             </div>
             <div class="form-group rate-display" id="rate-display" style="display: none;">
                 <label>목표 생산률</label>
                 <span id="calculated-rate">-</span>
             </div>
             <button id="show-tree-btn" class="btn btn-primary">트리 표시</button>
+            <button id="toggle-graph-btn" class="btn btn-secondary" onclick="toggleGraph()">그래프 숨기기</button>
         </div>
     </div>
 

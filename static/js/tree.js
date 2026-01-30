@@ -14,6 +14,8 @@ const treeContainer = document.getElementById('tree-network');
 const summarySection = document.getElementById('production-summary-section');
 const productionItemsTable = document.getElementById('production-items-table');
 const rawMaterialsTable = document.getElementById('raw-materials-table');
+const toggleGraphBtn = document.getElementById('toggle-graph-btn');
+const treeContainerParent = document.querySelector('.tree-container');
 
 // Get icon URL for an item
 function getIconUrl(itemId) {
@@ -303,6 +305,21 @@ function renderSummary(summary) {
             <td class="${item.surplus > 0 ? 'highlight-surplus' : ''}">${item.surplus > 0 ? '+' + formatRate(item.surplus) : '-'}</td>
         </tr>
     `).join('');
+}
+
+// Adjust lines with +/- buttons
+function adjustLines(delta) {
+    const current = parseInt(targetLinesInput.value) || 1;
+    const newValue = Math.max(1, current + delta);
+    targetLinesInput.value = newValue;
+    targetLinesInput.dispatchEvent(new Event('input'));
+}
+
+// Toggle graph visibility
+function toggleGraph() {
+    const isHidden = treeContainerParent.style.display === 'none';
+    treeContainerParent.style.display = isHidden ? '' : 'none';
+    toggleGraphBtn.textContent = isHidden ? '그래프 숨기기' : '그래프 표시';
 }
 
 // Quick buttons
