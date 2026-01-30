@@ -770,16 +770,15 @@ body {
 }
 
 .add-item-form {
-    display: flex;
-    gap: 0.5rem;
-    align-items: flex-start;
+    display: block;
     margin-bottom: 0.75rem;
+    background-color: #16213e;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .add-item-form .form-group {
-    flex: 1;
-    margin-bottom: 0;
-    position: relative;
+    margin-bottom: 8px;
 }
 
 .add-item-form input {
@@ -789,6 +788,62 @@ body {
     border: 1px solid #4fc3f7;
     border-radius: 4px;
     color: #fff;
+}
+
+/* Item picker grid */
+.item-picker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 8px;
+    background-color: #1a1a2e;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.item-picker-item {
+    width: 52px;
+    height: 52px;
+    padding: 2px;
+    background-color: #2a2a4a;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.item-picker-item:hover {
+    border-color: #4fc3f7;
+    background-color: #3a3a5a;
+}
+
+.item-picker-item.selected {
+    border-color: #4CAF50;
+    background-color: #2a4a2a;
+}
+
+.item-picker-item.hidden {
+    display: none;
+}
+
+.item-picker-item img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+}
+
+.add-item-form #cancel-add-btn {
+    margin-top: 8px;
+}
+
+.item-picker-item[title] {
+    position: relative;
 }
 
 .multi-item-actions {

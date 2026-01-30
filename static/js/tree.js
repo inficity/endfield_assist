@@ -69,7 +69,7 @@ const multiItemList = document.getElementById('multi-item-list');
 const addItemBtn = document.getElementById('add-item-btn');
 const addItemForm = document.getElementById('add-item-form');
 const newItemSearch = document.getElementById('new-item-search');
-const newAutocompleteList = document.getElementById('new-autocomplete-list');
+const itemPickerGrid = document.getElementById('item-picker-grid');
 const cancelAddBtn = document.getElementById('cancel-add-btn');
 const showMultiTreeBtn = document.getElementById('show-multi-tree-btn');
 const treeContainer = document.getElementById('tree-network');
@@ -189,17 +189,49 @@ function setItemLines(index, value) {
 
 // Show add item form
 function showAddItemForm() {
-    addItemForm.style.display = 'flex';
+    addItemForm.style.display = 'block';
     addItemBtn.style.display = 'none';
     newItemSearch.value = '';
     newItemSearch.focus();
+    renderItemPickerGrid();
+}
+
+// Render item picker grid
+function renderItemPickerGrid(filter = '') {
+    const craftableItems = items.filter(item => !item.is_raw);
+    const filterLower = filter.toLowerCase();
+
+    itemPickerGrid.innerHTML = craftableItems.map(item => {
+        const isSelected = selectedItems.some(i => i.id === item.id);
+        const matchesFilter = !filter ||
+            item.name.toLowerCase().includes(filterLower) ||
+            item.id.toLowerCase().includes(filterLower);
+
+        return `
+            <div class="item-picker-item ${isSelected ? 'selected' : ''} ${matchesFilter ? '' : 'hidden'}"
+                 data-item-id="${item.id}"
+                 data-item-name="${item.name}"
+                 title="${item.name}">
+                <img src="${getIconUrl(item.id)}" alt="${item.name}" onerror="this.style.display='none'">
+            </div>
+        `;
+    }).join('');
+
+    // Add click handlers
+    itemPickerGrid.querySelectorAll('.item-picker-item').forEach(el => {
+        el.addEventListener('click', () => {
+            const itemId = el.dataset.itemId;
+            const itemName = el.dataset.itemName;
+            addItem(itemId, itemName);
+            renderItemPickerGrid(newItemSearch.value);  // Re-render to show selected state
+        });
+    });
 }
 
 // Hide add item form
 function hideAddItemForm() {
     addItemForm.style.display = 'none';
     addItemBtn.style.display = '';
-    newAutocompleteList.classList.remove('active');
 }
 
 // Toggle split point
@@ -622,65 +654,18 @@ addItemBtn.addEventListener('click', showAddItemForm);
 cancelAddBtn.addEventListener('click', hideAddItemForm);
 showMultiTreeBtn.addEventListener('click', loadMultiProductionTree);
 
-// Autocomplete for adding new items
+// Filter item picker grid based on search input
 newItemSearch.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    newAutocompleteList.innerHTML = '';
-
-    if (!query) {
-        newAutocompleteList.classList.remove('active');
-        return;
-    }
-
-    // Filter only craftable items (not raw)
-    const matches = items.filter(item =>
-        !item.is_raw && (
-            item.name.toLowerCase().includes(query) ||
-            item.id.toLowerCase().includes(query)
-        )
-    );
-
-    if (matches.length > 0) {
-        matches.slice(0, 10).forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'autocomplete-item';
-            div.innerHTML = `
-                <img src="${getIconUrl(item.id)}" onerror="this.style.display='none'">
-                <span>${item.name}</span>
-            `;
-            div.addEventListener('click', () => {
-                addItem(item.id, item.name);
-            });
-            newAutocompleteList.appendChild(div);
-        });
-        newAutocompleteList.classList.add('active');
-    } else {
-        newAutocompleteList.classList.remove('active');
-    }
+    renderItemPickerGrid(e.target.value);
 });
 
-// Close autocomplete when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.add-item-form')) {
-        newAutocompleteList.classList.remove('active');
-    }
-});
-
-// Quick buttons
+// Quick buttons - add item to list (don't reset existing items)
 document.querySelectorAll('.quick-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const itemId = btn.dataset.item;
         const item = items.find(i => i.id === itemId);
         if (item) {
-            // Clear existing items and add this one
-            selectedItems = [];
-            splitPoints.clear();
-            siteAssignments = {};
-            addItem(item.id, item.name);  // addItem already calls saveState()
-
-            // Update active state
-            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            addItem(item.id, item.name);  // addItem checks for duplicates and calls saveState()
         }
     });
 });
