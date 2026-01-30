@@ -564,9 +564,7 @@ class RecipeTreeService:
         """
         Calculate track (vertical position) for each node.
 
-        Nodes that branch into multiple paths are placed between their targets.
-        This helps create a cleaner layout with less edge crossing.
-        Each target item's tree gets its own track range to avoid overlap.
+        Spreads out suppliers of each node vertically to create a proper tree layout.
         """
         if not nodes:
             return
@@ -602,46 +600,55 @@ class RecipeTreeService:
                 if current in tree_nodes:
                     continue
                 tree_nodes.add(current)
-                # Add all suppliers of this node
                 for supplier_id in incoming.get(current, []):
                     if supplier_id not in tree_nodes:
                         queue.append(supplier_id)
 
-            # Assign tracks for this tree
+            # Assign track for root
             track_assignment[root_id] = track_offset
 
-            # Get immediate sources and assign tracks
-            immediate_sources = incoming.get(root_id, [])
-            for i, source_id in enumerate(immediate_sources):
-                track_assignment[source_id] = track_offset + i
+            # Process level by level (BFS), spreading suppliers of each node
+            processed = {root_id}
+            current_level = [root_id]
 
-            # Propagate tracks within this tree
-            tree_nodes_sorted = sorted(
-                [n for n in nodes if n["id"] in tree_nodes],
-                key=lambda n: n.get("level", 0)
-            )
+            while current_level:
+                next_level = []
+                for node_id in current_level:
+                    node_track = track_assignment[node_id]
+                    suppliers = incoming.get(node_id, [])
 
-            for node in tree_nodes_sorted:
-                node_id = node["id"]
-                if node_id in track_assignment:
-                    continue
+                    if len(suppliers) == 1:
+                        # Single supplier - same track as consumer
+                        sup_id = suppliers[0]
+                        if sup_id not in track_assignment:
+                            track_assignment[sup_id] = node_track
+                        if sup_id not in processed:
+                            next_level.append(sup_id)
+                            processed.add(sup_id)
+                    elif len(suppliers) > 1:
+                        # Multiple suppliers - spread them vertically around the node's track
+                        spread = 1.0  # Spacing between suppliers
+                        start_track = node_track - (len(suppliers) - 1) * spread / 2
+                        for i, sup_id in enumerate(suppliers):
+                            if sup_id not in track_assignment:
+                                track_assignment[sup_id] = start_track + i * spread
+                            if sup_id not in processed:
+                                next_level.append(sup_id)
+                                processed.add(sup_id)
 
-                target_ids = outgoing.get(node_id, [])
-                if target_ids:
-                    target_tracks = [track_assignment.get(tid) for tid in target_ids
-                                    if tid in track_assignment]
-                    if target_tracks:
-                        track_assignment[node_id] = sum(target_tracks) / len(target_tracks)
-                    else:
-                        track_assignment[node_id] = track_offset
-                else:
-                    track_assignment[node_id] = track_offset
+                current_level = next_level
 
             # Calculate max track used by this tree and update offset for next tree
             tree_tracks = [track_assignment.get(nid, 0) for nid in tree_nodes]
             if tree_tracks:
+                min_track = min(tree_tracks)
                 max_track = max(tree_tracks)
-                track_offset = max_track + 1.5  # Gap between trees
+                # Shift all tracks to start from track_offset
+                shift = track_offset - min_track
+                for nid in tree_nodes:
+                    if nid in track_assignment:
+                        track_assignment[nid] += shift
+                track_offset = max_track + shift + 0.8  # Gap between trees
 
         # Assign tracks to nodes
         for node in nodes:

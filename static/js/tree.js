@@ -104,11 +104,16 @@ function getBaseProductionRate(recipe) {
 
 // Render the multi-item list
 function renderMultiItemList() {
-    multiItemList.innerHTML = selectedItems.map((item, index) => `
+    multiItemList.innerHTML = selectedItems.map((item, index) => {
+        const recipe = getRecipeForItem(item.id);
+        const baseRate = getBaseProductionRate(recipe);
+        const totalRate = baseRate * item.lines;
+        return `
         <div class="multi-item-row" data-index="${index}">
             <div class="multi-item-info">
                 <img src="${getIconUrl(item.id)}" class="item-icon-small" onerror="this.style.display='none'">
                 <span class="item-name">${item.name}</span>
+                <span class="item-rate">${formatRate(totalRate)}/min</span>
             </div>
             <div class="multi-item-controls">
                 <span class="lines-label">라인</span>
@@ -119,7 +124,7 @@ function renderMultiItemList() {
                 <button class="btn btn-small btn-delete" onclick="removeItem(${index})">✕</button>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 
     // Update button state
     showMultiTreeBtn.disabled = selectedItems.length === 0;
@@ -127,9 +132,13 @@ function renderMultiItemList() {
 
 // Add item to the list
 function addItem(itemId, itemName) {
-    // Check if already added
-    if (selectedItems.some(i => i.id === itemId)) {
-        alert('이미 추가된 아이템입니다.');
+    // Check if already added - if so, increment lines
+    const existingItem = selectedItems.find(i => i.id === itemId);
+    if (existingItem) {
+        existingItem.lines += 1;
+        renderMultiItemList();
+        saveState();
+        loadMultiProductionTree();
         return;
     }
 
@@ -594,9 +603,14 @@ function renderBundles(bundles, units) {
 }
 
 // Render production summary tables
+// DOM elements for raw materials panel
+const rawMaterialsPanel = document.getElementById('raw-materials-panel');
+const rawMaterialsList = document.getElementById('raw-materials-list');
+
 function renderSummary(summary) {
     if (!summary || summary.length === 0) {
         summarySection.style.display = 'none';
+        rawMaterialsPanel.style.display = 'none';
         return;
     }
 
@@ -640,6 +654,21 @@ function renderSummary(summary) {
             <td class="${item.surplus > 0 ? 'highlight-surplus' : ''}">${item.surplus > 0 ? '+' + formatRate(item.surplus) : '-'}</td>
         </tr>
     `).join('');
+
+    // Render raw materials panel (side panel)
+    if (rawMaterials.length > 0) {
+        rawMaterialsPanel.style.display = 'block';
+        rawMaterialsList.innerHTML = rawMaterials.map(item => `
+            <div class="raw-material-item">
+                <img src="${getIconUrl(item.item_id)}" onerror="this.style.display='none'">
+                <span class="material-name">${item.name}</span>
+                <span class="material-lines">${item.lines}개</span>
+                <span class="material-rate">${formatRate(item.rate)}/min</span>
+            </div>
+        `).join('');
+    } else {
+        rawMaterialsPanel.style.display = 'none';
+    }
 }
 
 // Toggle graph visibility
