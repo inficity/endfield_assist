@@ -354,10 +354,15 @@ function renderTree(treeData) {
 
         return {
             id: node.id,
-            label: '',  // Empty label - count shown as badge
+            label: node.machine || '',  // Show machine name below node
             image: getIconUrl(node.item_id),
             shape: 'image',
             size: 47,
+            font: {
+                color: '#aaa',
+                size: 28,
+                vadjust: 0,  // Position label below the icon
+            },
             color: {
                 background: isSplitPoint ? '#9C27B0' : node.color,
                 border: isSplitPoint ? '#9C27B0' : node.color,
@@ -419,7 +424,6 @@ function renderTree(treeData) {
     // Draw count badges on nodes after rendering
     network.on('afterDrawing', function(ctx) {
         const nodePositions = network.getPositions();
-        const scale = network.getScale();
 
         nodes.forEach(node => {
             const count = node.lines || 1;
@@ -427,24 +431,20 @@ function renderTree(treeData) {
                 const pos = nodePositions[node.id];
                 if (!pos) return;
 
-                // Convert to canvas coordinates
-                const canvasPos = network.canvasToDOM(pos);
+                // Badge position: top-right corner of the icon
+                // Node icon size is about 94px (47*2), offset to top-right
+                const badgeX = pos.x + 40;
+                const badgeY = pos.y - 45;
 
-                // Badge position: top-right corner of the icon (text center at corner)
-                const nodeSize = 47 * scale;
-                const badgeX = canvasPos.x + nodeSize * 0.8;
-                const badgeY = canvasPos.y - nodeSize * 0.9;
-
-                // Draw badge text
+                // Draw badge text (ctx is already in canvas coordinates)
                 ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0);  // Reset transform for screen coordinates
-                ctx.font = 'bold 18px Arial';
+                ctx.font = 'bold 28px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
                 // White text with black outline for visibility
                 ctx.strokeStyle = '#000';
-                ctx.lineWidth = 3;
+                ctx.lineWidth = 4;
                 ctx.strokeText(`x${count}`, badgeX, badgeY);
                 ctx.fillStyle = '#fff';
                 ctx.fillText(`x${count}`, badgeX, badgeY);
