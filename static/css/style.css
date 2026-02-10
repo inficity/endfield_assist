@@ -781,7 +781,6 @@ body {
 
 .multi-item-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0.75rem;
     background-color: #2a2a4a;
@@ -789,10 +788,38 @@ body {
     border: 1px solid #444;
 }
 
+.item-order-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-right: 0.5rem;
+}
+
+.item-order-controls button {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    background: #333;
+    border: 1px solid #555;
+    color: #aaa;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.item-order-controls button:hover:not(:disabled) {
+    background: #444;
+    color: #fff;
+}
+
+.item-order-controls button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 .multi-item-info {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex: 1;
 }
 
 .multi-item-info .item-name {

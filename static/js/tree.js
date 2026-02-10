@@ -104,12 +104,17 @@ function getBaseProductionRate(recipe) {
 
 // Render the multi-item list
 function renderMultiItemList() {
+    const lastIndex = selectedItems.length - 1;
     multiItemList.innerHTML = selectedItems.map((item, index) => {
         const recipe = getRecipeForItem(item.id);
         const baseRate = getBaseProductionRate(recipe);
         const totalRate = baseRate * item.lines;
         return `
         <div class="multi-item-row" data-index="${index}">
+            <div class="item-order-controls">
+                <button onclick="moveItemUp(${index})" ${index === 0 ? 'disabled' : ''}>↑</button>
+                <button onclick="moveItemDown(${index})" ${index === lastIndex ? 'disabled' : ''}>↓</button>
+            </div>
             <div class="multi-item-info">
                 <img src="${getIconUrl(item.id)}" class="item-icon-small" onerror="this.style.display='none'">
                 <span class="item-name">${item.name}</span>
@@ -191,6 +196,26 @@ function adjustItemLines(index, delta) {
 function setItemLines(index, value) {
     const lines = Math.max(1, parseInt(value) || 1);
     selectedItems[index].lines = lines;
+    renderMultiItemList();
+    saveState();
+    loadMultiProductionTree();
+}
+
+// Move item up in the list
+function moveItemUp(index) {
+    if (index <= 0) return;
+    [selectedItems[index], selectedItems[index - 1]] =
+        [selectedItems[index - 1], selectedItems[index]];
+    renderMultiItemList();
+    saveState();
+    loadMultiProductionTree();
+}
+
+// Move item down in the list
+function moveItemDown(index) {
+    if (index >= selectedItems.length - 1) return;
+    [selectedItems[index], selectedItems[index + 1]] =
+        [selectedItems[index + 1], selectedItems[index]];
     renderMultiItemList();
     saveState();
     loadMultiProductionTree();
